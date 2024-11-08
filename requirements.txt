@@ -4,5 +4,6 @@ load-dotenv
 streamlit
 moviepy
 imageio
-opencv-python
 streamlit-option-menu
+opencv-python
+opencv-python-headless
