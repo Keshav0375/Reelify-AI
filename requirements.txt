@@ -1,0 +1,8 @@
+boto3
+openai
+load-dotenv
+streamlit
+moviepy
+imageio
+opencv-python
+streamlit-option-menu
