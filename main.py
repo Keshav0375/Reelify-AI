@@ -9,7 +9,7 @@ from voice_generation import create_audio_files
 from image_generation import create_images_for_prompts
 from video_generator import create_video_without_captions
 from caption_generation import add_fancy_captions
-st.set_page_config(layout="wide", page_title="EchoSlice: Faceless Reels Creator")
+st.set_page_config(layout="wide", page_title="Reelify AI: Faceless Reels Creator")
 
 if 'selected_tab' not in st.session_state:
     st.session_state.selected_tab = 'Home'
@@ -62,13 +62,13 @@ if st.session_state['selected_tab'] == 'Home':
     st.markdown("""
                         <h1 
                         style='font-family: Georgia, serif; text-align: center;'>
-                        EchoSlice: Your Personal Faceless Reels Creator
+                        Reelify AI: Your Personal Faceless Reels Creator
                         </h1>
                     """,
                 unsafe_allow_html=True)
     st.write(
         """
-        Welcome to EchoSlice! Effortlessly create captivating faceless reels with a single prompt. 
+        Welcome to Reelify AI! Effortlessly create captivating faceless reels with a single prompt. 
         Choose from diverse themes, and watch your ideas transform into engaging short videos, 
         optimized for virality on platforms like Instagram and YouTube. Start creating now!
         """)
@@ -205,4 +205,4 @@ elif st.session_state['selected_tab'] == 'Get Your Video':
         st.write("Please go back and preview the sounds first.")
 
 st.sidebar.markdown("---")
-st.sidebar.write("Thank you for using EchoSlice created by Keshav!")
+st.sidebar.write("Thank you for using Reelify AI created by Keshav!")
