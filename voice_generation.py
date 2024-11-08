@@ -21,7 +21,7 @@ def generate_adam_legacy_voice(text):
         }
         headers = {
             "Content-Type": "application/json",
-            "xi-api-key": os.getenv('ELEVEN_LABS_API_KEY_2')
+            "xi-api-key": os.getenv('ELEVEN_LABS_API_KEY')
         }
 
         response = requests.post(url, json=payload, headers=headers)
