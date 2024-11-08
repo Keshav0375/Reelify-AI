@@ -31,26 +31,8 @@ def generate_adam_legacy_voice(text):
         else:
             raise Exception(f"Error: {response.status_code}, {response.json()}")
     except Exception as ev1:
-        logging.info("Voice Generation..II")
-        url = "https://api.elevenlabs.io/v1/text-to-speech/pNInz6obpgDQGcFmaJgB"
-        payload = {
-            "text": text,
-            "voice_settings": {
-                "stability": 0.75,
-                "similarity_boost": 0.9
-            }
-        }
-        headers = {
-            "Content-Type": "application/json",
-            "xi-api-key": os.getenv('ELEVEN_LABS_API_KEY_2')
-        }
-
-        response = requests.post(url, json=payload, headers=headers)
-
-        if response.status_code == 200:
-            return response.content
-        else:
-            raise Exception(f"Error: {response.status_code}, {response.json()}")
+        logging.error(ev1)
+        raise
 
 
 def create_audio_files(text_dict):
