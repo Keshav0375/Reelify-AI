@@ -21,7 +21,7 @@ def generate_adam_legacy_voice(text):
         }
         headers = {
             "Content-Type": "application/json",
-            "xi-api-key": os.getenv('ELEVEN_LABS_API_KEY_1')
+            "xi-api-key": os.getenv('ELEVEN_LABS_API_KEY_2')
         }
 
         response = requests.post(url, json=payload, headers=headers)
@@ -52,3 +52,8 @@ def create_audio_files(text_dict):
 
     return saved_audio_paths
 
+sound = {
+    "scene_1": "hello sanju samson scored hundred",
+    "scene_2": "I will earn 300K per year in few years"
+}
+create_audio_files(sound)
