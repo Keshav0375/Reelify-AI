@@ -128,7 +128,7 @@ def image_prompt_generator(topic, theme, language, scenes):
     contentType = "application/json"
     job = "You are a creative assistant generating short, visually descriptive prompts for AI image generation. For each scene in a short reel, you will create a 2-5 word prompt that captures the scene’s core visuals and mood. Prompts should be simple, directly related to the scene content, and aligned with the reel’s theme and style."
     prompt = f"""
-    Based on the following scenes, generate a in detailed 7-9 word image prompt for each one. Each prompt should be visually descriptive, capturing the main idea and atmosphere of each scene for AI image generation. The reel is themed around '{theme}' and is based on the topic '{topic}', in the language '{language}'.
+    Based on the following scenes, generate a in detailed 7-9 word image prompt for each one. Each prompt should be visually descriptive, capturing the main idea and atmosphere of each scene for AI image generation. The reel is themed around '{theme}' and is based on the topic '{topic}', in the English language.
     
     Scenes:
     {scenes}

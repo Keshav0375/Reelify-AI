@@ -52,8 +52,8 @@ def create_audio_files(text_dict):
 
     return saved_audio_paths
 
-sound = {
-    "scene_1": "hello sanju samson scored hundred",
-    "scene_2": "I will earn 300K per year in few years"
-}
-create_audio_files(sound)
+# sound = {
+#     "scene_1": "hello sanju samson scored hundred",
+#     "scene_2": "I will earn 300K per year in few years"
+# }
+# create_audio_files(sound)

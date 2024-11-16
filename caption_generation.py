@@ -71,7 +71,7 @@ def add_fancy_captions(video_path, captions, audio_paths):
         shadow_color = (0, 0, 0)
         cv2.putText(frame, caption_text, (text_x + 2, text_y + 2), font, font_scale, shadow_color, font_thickness + 2)
 
-        text_color = (192, 192, 192)
+        text_color = (255, 255, 255)
         cv2.putText(frame, caption_text, (text_x, text_y), font, font_scale, text_color, font_thickness)
 
         out.write(frame)
