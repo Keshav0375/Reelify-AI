@@ -48,11 +48,24 @@ def add_fancy_captions(video_path, captions, audio_paths):
                 scene_text = captions[f"scene_{current_scene + 1}"].split()
                 word_index = 0
 
-        scene_id = f"scene_{current_scene + 1}"
-        if scene_id in audio_durations:
-            scene_duration = audio_durations[scene_id]
-            words_in_scene = len(scene_text)
-            four_word_interval = scene_duration / (words_in_scene // 4)
+        if current_scene == 0:
+            scene_id = f"scene_{current_scene + 1}"
+            if scene_id in audio_durations:
+                scene_duration = audio_durations[scene_id]
+                words_in_scene = len(scene_text)
+                four_word_interval = max(scene_duration / (words_in_scene // 4), 0.5)
+                if current_time < four_word_interval and word_index == 0:
+                    pop_up_words = scene_text[word_index:word_index + 4]
+                    word_index += 4
+            else:
+                four_word_interval = 1
+
+        elif current_scene > 0:
+            scene_id = f"scene_{current_scene + 1}"
+            if scene_id in audio_durations:
+                scene_duration = audio_durations[scene_id]
+                words_in_scene = len(scene_text)
+                four_word_interval = scene_duration / (words_in_scene // 4)
 
         if word_index < len(scene_text):
             if (current_time % four_word_interval) < (1 / fps):
