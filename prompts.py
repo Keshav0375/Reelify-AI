@@ -32,24 +32,21 @@ def story_generator(topic, theme, language):
     }
     accept = "application/json"
     contentType = "application/json"
-    job = "You are a creative assistant generating a suspenseful, interconnected, and engaging storyline for a short reel or social media video. The story will be split into six scenes, each with 15 words or fewer. The storyline should be fast-paced, intriguing, and keep viewers engaged from start to finish."
+    job = "You are a creative assistant generating a detailed, suspenseful, and engaging storyline divided into six interconnected scenes."
     prompt = f"""
-    Create a captivating storyline for a short reel based on the topic '{topic}' and theme '{theme}', in the language '{language}'.
-    Develop a suspenseful, interconnected narrative divided into six scenes, with each scene containing exactly 20 words. 
-    Each scene should:
-    - Strictly follow the theme '{theme}', incorporating its mood, tone, and style throughout.
-    - Use simple, easy-to-understand words that everyone can follow, avoiding complex or technical language.
-    - Use language, imagery, and pacing that matches the theme, reinforcing the user’s desired aesthetic.
-    - Begin with a captivating hook that draws viewers in immediately.
-    - Build anticipation and curiosity in each scene, making viewers want to keep watching.
-    - Use twists and cliffhangers between scenes to deepen suspense and heighten engagement.
-    - Conclude with a memorable or surprising ending that aligns with the theme, leaving viewers intrigued.
+    Create a compelling story based on the topic '{topic}' and theme '{theme}', written in '{language}'.
+    The story must:
+    - Be divided into six scenes, each with 22-24 words.
+    - Begin with an emotionally engaging hook tailored to the theme to captivate the audience immediately.
+    - Maintain a suspenseful and interconnected narrative throughout, building curiosity and anticipation between scenes.
+    - Use twists, cliffhangers, and vivid imagery to keep the audience engaged.
+    - Conclude with a memorable and impactful ending that resonates with the theme and leaves a lasting impression.
     
-    Ensure that:
-    - Every scene transitions smoothly to the next, creating a sense of continuity and interconnectedness.
-    - The narrative is cohesive and compact, fitting the fast-paced, high-impact format of reels and shorts.
-    - All 6 scenes align with the chosen theme visually and conceptually, creating a unified story arc.
-    - Each scene must have 20 words.
+    Additional Requirements:
+    - Match the mood, tone, and style of the chosen theme in every scene.
+    - Ensure smooth and logical transitions between scenes for a cohesive story arc.
+    - Use simple, universally understandable language suitable for a diverse audience.
+    - Align the narrative with the fast-paced, high-impact nature of short reels or social media videos.
     
     Strictly return the output in the format of a Python dictionary or JSON without any additional text or explanation.
     """
@@ -109,7 +106,7 @@ def story_generator(topic, theme, language):
             max_tokens=4000)
 
         j_ = json.loads(response.choices[0].message.content)
-
+    logging.info("Story Generation Successful")
     return j_
 
 
@@ -198,5 +195,6 @@ def image_prompt_generator(topic, theme, language, scenes):
             max_tokens=4000)
 
         j_ = json.loads(response.choices[0].message.content)
+    logging.info("Search Prompts Created")
     return j_
 

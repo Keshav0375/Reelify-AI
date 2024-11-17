@@ -63,7 +63,7 @@ def add_fancy_captions(video_path, captions, audio_paths):
 
         font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 1.8
-        font_thickness = 11
+        font_thickness = 9
         text_size = cv2.getTextSize(caption_text, font, font_scale, font_thickness)[0]
         text_x = (width - text_size[0]) // 2
         text_y = (height + text_size[1]) // 2

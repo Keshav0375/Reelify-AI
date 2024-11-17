@@ -1,0 +1,14 @@
+1. Add different sounds, looking realistic (Brian, clyde, Emily, Michael, Nicole)  == completed
+2. Add different gameplay videos == completed
+3. Optimize the story generation, make it interesting and complex == completed
+4. Optimize Caption Timing
+
+
+
+
+When Startup
+1. Voice according to demographics and emotions.
+2. Memes and story personalized using scraping and other social media platforms.
+3. Separate hooks according to emotions. Will provide option to user.
+4. Separate ending as same as hook for starting.
+5. Dedicated video Editor for trimming, speed, image relocation, etc.

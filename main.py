@@ -9,6 +9,10 @@ from voice_generation import create_audio_files
 from image_generation import create_images_for_prompts
 from video_generator import create_video_without_captions
 from caption_generation import add_fancy_captions
+import random
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 st.set_page_config(layout="wide", page_title="Reelify AI: Faceless Reels Creator")
 
 if 'selected_tab' not in st.session_state:
@@ -31,10 +35,15 @@ def track_temp_dir(dir_path):
 
 
 def cleanup_temp_files():
-    for dir_path in st.session_state.temporary_files:
-        if os.path.exists(dir_path):
-            shutil.rmtree(dir_path)
-    st.session_state.temporary_files.clear()
+    """Remove all temporary directories and clear the tracking list."""
+    for dir_path in st.session_state.get("temporary_files", []):
+        try:
+            if os.path.exists(dir_path):
+                shutil.rmtree(dir_path)
+        except Exception as e:
+            logging.error(f"Error removing {dir_path}: {e}")
+    st.session_state.temporary_files = []
+
 
 if 'restart_triggered' not in st.session_state:
     st.session_state.restart_triggered = False
@@ -185,24 +194,38 @@ elif st.session_state['selected_tab'] == 'Get Your Video':
     st.markdown("<h2 style='text-align: center;'>Final Step: Get Your Video</h2>", unsafe_allow_html=True)
     if 'sound_paths' in st.session_state:
         with st.spinner("Generating video..."):
-            video_path = create_video_without_captions(st.session_state.image_paths, st.session_state.sound_paths, "./gameplay_folder\\minecraft_1.mp4")
+            videos_gameplay = {
+                "minecraft": "./gameplay_folder\\minecraft_1.mp4",
+                "car": "./gameplay_folder\\car_runner_1.mp4",
+                "cycling": "./gameplay_folder\\cycling_1.mp4"
+            }
+            selected_style, game_video_play_path = random.choice(list(videos_gameplay.items()))
+            logging.info(selected_style)
+            video_path = create_video_without_captions(st.session_state.image_paths, st.session_state.sound_paths, game_video_play_path)
             st.session_state.video_path = video_path
             track_temp_dir(os.path.dirname(video_path))
+            logging.info("Main Video Completed")
         with st.spinner("Adding fancy captions..."):
             final_video_path = add_fancy_captions(video_path, st.session_state.story_scenes, st.session_state.sound_paths)
             st.session_state.final_video_path = final_video_path
             st.success("Your video is ready!")
             track_temp_dir(os.path.dirname(final_video_path))
+            logging.info("Final Video Successfully Generated")
+            logging.info(st.session_state.temporary_files)
 
         st.video(st.session_state.final_video_path, autoplay=True)
-
-        if st.button("Mark as Done and Restart"):
-            cleanup_temp_files()
-            st.session_state.restart_triggered = True
-            st.session_state.selected_tab = 'Home'
+        st.write("Before Clicking Button Make Sure to download the video from three dots at bottom right corner in Video Editor")
 
     else:
         st.write("Please go back and preview the sounds first.")
+
+    if st.button("Cleanup File and Move to Home Page"):
+        cleanup_temp_files()
+        st.session_state.clear()
+        st.session_state.restart_triggered = False
+        st.session_state.selected_tab = 'Home'
+        st.rerun()
+
 
 st.sidebar.markdown("---")
 st.sidebar.write("Thank you for using Reelify AI created by Keshav!")

@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 def generate_scene_image_1(text):
     try:
-        time.sleep(5)
+        time.sleep(3)
         client = AzureOpenAI(
             azure_endpoint="https://slideoo-editor-dalle.openai.azure.com/",
             api_key=os.getenv("DALLE_OPENAI_API_KEY"),
@@ -38,7 +38,7 @@ def generate_scene_image_1(text):
 
 def generate_scene_image_2(text):
     try:
-        time.sleep(5)
+        time.sleep(3)
         client = AzureOpenAI(
             azure_endpoint="https://slideoo.openai.azure.com/",
             api_key=os.getenv("DALLE_OPENAI_API_KEY_1"),
@@ -121,6 +121,7 @@ def create_images_for_prompts(prompts_dict):
 
     for i, (key, prompt) in enumerate(prompts_dict.items(), start=1):
         if prompt:
+            logging.info(f"{prompt}--{i}")
             try:
                 image_url_1 = generate_scene_image_1(prompt)
                 image_url_2 = generate_scene_image_2(prompt)
@@ -132,10 +133,10 @@ def create_images_for_prompts(prompts_dict):
 
                 saved_image_paths[key] = [os.path.join(unique_dir, f"{prefix_1}.png"), os.path.join(unique_dir, f"{prefix_2}.png")]
             except Exception as e:
-                print(f"Error generating images for {key}: {e}")
+                logging.info(f"Error generating images for {key}: {e}")
                 saved_image_paths[key] = None
         else:
             saved_image_paths[key] = None
-
+    logging.info("Image Generation Successful")
     return saved_image_paths
 
