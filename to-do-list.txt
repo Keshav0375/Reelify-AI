@@ -1,7 +1,11 @@
 1. Add different sounds, looking realistic (Brian, clyde, Emily, Michael, Nicole)  == completed
 2. Add different gameplay videos == completed
 3. Optimize the story generation, make it interesting and complex == completed
-4. Optimize Caption Timing
+4. Optimize Caption Timing == completed
+5. Story generation from Reddit Articles
+6. Caption single word option
+7. Voice Option
+8. Fact based scenes Creator
 
 
 

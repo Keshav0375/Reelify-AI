@@ -9,6 +9,7 @@ from voice_generation import create_audio_files
 from image_generation import create_images_for_prompts
 from video_generator import create_video_without_captions
 from caption_generation import add_fancy_captions
+from reddit_story_generation import reddit_story_generator
 import random
 import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -137,17 +138,38 @@ elif st.session_state['selected_tab'] == "Enter Your Topic":
         "English",
         "Hindi"
     ]
+    caption_options = [
+        "Single Word Caption",
+        "Multi Word Caption"
+    ]
 
     with st.form("topic_form"):
-        st.session_state.topic = st.text_input("Enter your topic:")
+        st.session_state.main_topic = st.text_input("Enter your topic:")
         st.session_state.theme = st.selectbox("Choose a theme:", options)
-        st.session_state.language = st.selectbox("Choose a language:", language_options)
-        submitted = st.form_submit_button("Generate Story")
+        st.session_state.language1 = st.selectbox("Choose a language:", language_options)
+        topic_form_submitted = st.form_submit_button("Generate Story")
 
-    if submitted:
+    with st.form("personalized_form"):
+        st.session_state.personalized_topic = st.text_area("Enter your Reddit story:")
+        st.session_state.language2 = st.selectbox("Choose a language:", language_options, key="language_2")
+        personalized_form_submitted = st.form_submit_button("Generate Story")
+
+    if topic_form_submitted and personalized_form_submitted:
+        st.warning("Please fill out only one form.")
+    elif topic_form_submitted:
         with st.spinner("Generating story..."):
-            st.session_state.story_scenes = story_generator(st.session_state.topic, st.session_state.theme, st.session_state.language)
+            st.session_state.story_scenes = story_generator(st.session_state.main_topic, st.session_state.theme, st.session_state.language1)
+            st.session_state.topic = st.session_state.main_topic
+            st.session_state.language = st.session_state.language1
         st.session_state.selected_tab = 'Story Preview'
+    elif personalized_form_submitted:
+        with st.spinner("Generating story..."):
+            st.session_state.story_scenes = reddit_story_generator(st.session_state.personalized_topic, st.session_state.language2)
+            st.session_state.topic = st.session_state.personalized_topic
+            st.session_state.language = st.session_state.language2
+        st.session_state.selected_tab = 'Story Preview'
+    elif not (topic_form_submitted or personalized_form_submitted):
+        st.info("Fill one of the forms and click 'Generate Story'.")
 
 elif st.session_state['selected_tab'] == 'Story Preview':
     st.markdown("<h2 style='text-align: center;'>Step 2: Story Scenes Preview</h2>", unsafe_allow_html=True)
@@ -207,6 +229,7 @@ elif st.session_state['selected_tab'] == 'Get Your Video':
             logging.info("Main Video Completed")
         with st.spinner("Adding fancy captions..."):
             final_video_path = add_fancy_captions(video_path, st.session_state.story_scenes, st.session_state.sound_paths)
+
             st.session_state.final_video_path = final_video_path
             st.success("Your video is ready!")
             track_temp_dir(os.path.dirname(final_video_path))
@@ -221,10 +244,7 @@ elif st.session_state['selected_tab'] == 'Get Your Video':
 
     if st.button("Cleanup File and Move to Home Page"):
         cleanup_temp_files()
-        st.session_state.clear()
-        st.session_state.restart_triggered = False
         st.session_state.selected_tab = 'Home'
-        st.rerun()
 
 
 st.sidebar.markdown("---")
